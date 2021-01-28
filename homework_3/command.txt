@@ -1,0 +1,61 @@
+1. Управление пользователями:
+
+создаю польлзователя с помощью команды useradd
+vadim@vadim-VirtualBox:~$ sudo useradd -m -s /bin/bash Leo
+
+нахожу в папках
+~$ cat /etc/passwd
+Leo:x:1001:1001::/home/Leo:/bin/bash
+~$ cat /etc/group
+Leo:x:1001:
+
+создаю пользователя с помощью команды adduser
+~$ sudo adduser user2
+~$ cat /etc/passwd
+user2:x:1002:1002:Alex,,,:/home/user2:/bin/bash
+
+удаляю пользоваеля Leo
+sudo userdel -r Leo
+
+2. Управление группами:
+
+Создаю группу team1
+~$ sudo useradd team1
+~$ cat /etc/group
+team1:x:1003:
+
+добавляю пользователя user2 в группу team1, не меняя основной
+~$ sudo usermod -aG team1 user2
+~$ cat /etc/group
+user2:x:1002:
+team1:x:1003:user2
+
+создаю группу с помощью команды adduser
+~$ sudo addgroup team2
+~$ cat /etc/group
+team1:x:1003:user2
+team2:x:1001:
+
+перемещаю пользователя из группы team1 в группу team2
+~$ sudo usermod -G team2 user2
+~$ cat /etc/group
+user2:x:1002:
+team1:x:1003:
+team2:x:1001:user2
+
+удаляю пользовател из группы
+~$ sudo deluser user2 team2
+Удаляется пользователь «user2» из группы «team2» ...
+Готово.
+~$ sudo id user2
+uid=1002(user2) gid=1002(user2) группы=1002(user2)
+
+3. Создать пользователя с правами суперпользователя. Сделать так, чтобы sudo не требовал пароль для выполнения команд.
+
+~$ sudo useradd -m -s /bin/bash user33
+~$ sudo usermod -aG sudo user33
+~$ sudo visudo
+# User privilege specification
+root    ALL=(ALL:ALL) ALL
+user33 ALL=(ALL) NOPASSWD: ALL
+
