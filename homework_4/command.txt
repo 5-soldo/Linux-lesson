@@ -1,0 +1,39 @@
+1. 
+echo 'Start' list-error.txt  # создаю файл
+cat /etc/* 2> list-error.txt  # добавляю поток ошибок в созданный файл
+cat list-error.txt  # проверяю появились ли данные в файле
+
+2.
+cat 'Next' cut_list.txt  # создаю файл
+cut -d' ' -f1 cut_list.txt | sort | uniq -с  # вырезаю первый столбец по разделителю ' ', сортирую и удаляю повторяющиеся строки, с выводом их количества 
+ 8 drwxr-xr-x
+ 2 -rw-rw-r--
+ 1 итого
+
+3.
+vadim@vadim-VirtualBox:~$ sudo nano /etc/ssh/sshd_config  # захожу в файл, отключаю аутентификацию по паролю PasswordAuthentication yes/no
+vadim@vadim-VirtualBox:~$ ps -ef | grep sshd  # проверяю процесы
+root        1882       1  0 фев01 ?     00:00:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
+vadim@vadim-VirtualBox:~$ sudo systemctl restart sshd
+vadim@vadim-VirtualBox:~$ ps -ef | grep sshd
+root       27457       1  0 14:06 ?        00:00:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
+vadim@vadim-VirtualBox:~$ sudo nano /etc/ssh/sshd_config
+vadim@vadim-VirtualBox:~$ sudo systemctl reload sshd
+vadim@vadim-VirtualBox:~$ ps -ef | grep sshd
+root       27457       1  0 14:06 ?        00:00:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
+#  после restart файлы перезапустились и PID изменился/ а после reload перечитались и PID не изменился.
+
+Вторая часть задания:
+vadim@vadim-VirtualBox:~$ cat > text.txt  # создаю файл и записываю содержимое с клавиатуры
+заврешаем процесс Ctrl+d
+vadim@vadim-VirtualBox:~$ ls
+ cut_list.txt     text.txt   Документы   Изображения   Общедоступные   Шаблоны
+ list-error.txt   Видео      Загрузки    Музыка       'Рабочий стол'
+vadim@vadim-VirtualBox:~$ cat text.txt  # проверяю записался ли текст
+заврешаем процесс Ctrl+d
+
+4.
+vadim@vadim-VirtualBox:~$ mc
+vadim@vadim-VirtualBox:~$ ps -ef
+vadim      27747    1484  0 14:34 pts/0    00:00:00 mc
+vadim@vadim-VirtualBox:~$ kill -9 27747Убито
