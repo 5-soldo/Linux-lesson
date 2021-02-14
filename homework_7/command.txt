@@ -1,0 +1,69 @@
+1.Подключить репозиторий с nginx любым удобным способом, установить nginx и потом удалить nginx, 
+используя утилиту dpkg.
+
+# установку производил следуя инструкции на сайте nginx.org
+
+vadim@vadim-VirtualBox:/etc/apt$ sudo apt install curl gnupg2 ca-certificates lsb-release
+vadim@vadim-VirtualBox:/etc/apt$ echo "deb http://nginx.org/packages/mainline/ubuntu `lsb_release -cs` nginx" \ | sudo tee /etc/apt/sources.list.d/nginx.list
+deb http://nginx.org/packages/mainline/ubuntu focal nginx
+vadim@vadim-VirtualBox:/etc/apt$ curl -fsSL https://nginx.org/keys/nginx_signing.key | sudo apt-key add -
+OK
+vadim@vadim-VirtualBox:/etc/apt$ sudo apt-key fingerprint ABF5BD827BD9BF62
+pub   rsa2048 2011-08-19 [SC] [годен до: 2024-06-14]
+      573B FD6B 3D8F BC64 1079  A6AB ABF5 BD82 7BD9 BF62
+uid         [ неизвестно ] nginx signing key <signing-key@nginx.com>
+vadim@vadim-VirtualBox:/etc/apt$ sudo apt update
+vadim@vadim-VirtualBox:/etc/apt$ sudo apt install nginx
+vadim@vadim-VirtualBox:/etc/apt$ sudo nano sources.list
+
+# удаление
+
+vadim@vadim-VirtualBox:/etc/apt$ sudo dpkg -r nginx 
+[sudo] пароль для vadim: 
+(Чтение базы данных … на данный момент установлено 234182 файла и каталога.)
+Удаляется nginx (1.19.6-1~focal) …
+Обрабатываются триггеры для man-db (2.9.1-1) …
+vadim@vadim-VirtualBox:/etc/apt$ sudo apt show nginx  # не все файлы удалились
+vadim@vadim-VirtualBox:/etc/apt$ sudo apt purge nginx
+
+2.Установить пакет на свой выбор, используя snap.
+
+vadim@vadim-VirtualBox:~/lesson7$ snap search Inkscape
+Название  Версия                       Издатель     Примечание  Описание
+inkscape  1.0.1-0767f8302a-2020-10-17  inkscape✓    -           Vector Graphics Editor
+boxy-svg  3.46.0                       jarek-foksa  -           Scalable Vector Graphics (SVG) editor
+vadim@vadim-VirtualBox:~/lesson7$ snap install Inkscape
+ошибка: cannot install "Inkscape": invalid instance name: invalid snap name:
+              "Inkscape"
+vadim@vadim-VirtualBox:~/lesson7$ snap install inkscape
+inkscape 1.0.1-0767f8302a-2020-10-17 от Inkscape Project (inkscape✓) установлен
+
+3.Настроить iptables: разрешить подключения только на 22-й и 80-й порты.
+
+vadim@vadim-VirtualBox:~/lesson7$ nano new_iptables.rules
+                             
+iptables -P INPUT DROP
+iptables -P OUTPUT DROP
+iptables -P INPUT DROP
+
+# разрешаем обмен по локальной петле
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+
+# Размещаем пакеты icmp (для обмена служебной информации)
+iptables -A INPUT -p icmp -j ACCEPT
+iptables -A OUTPUT -p icmp -j ACCEPT
+
+# Разрешаем соединение с  динамических портов
+iptables -A OUTPUT -p TCP -m tcp --sport 32768:61000 -j ACCEPT
+iptables -A OUTPUT -p UPD -m upd --sport 32768:61000 -j ACCEPT
+
+# Разрешить только те пакеты, которые мы запросили
+iptables -A OUTPUT -p TCP -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -p UPD -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# Разрешить подключения только на 22-й и 80-й порты
+iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+iptables -A OUTPUT -p tcp -m tcp --sport 80 -j ACCEPT
+iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+iptables -A OUTPUT -p tcp -m tcp --sport 22 -j ACCEPT
