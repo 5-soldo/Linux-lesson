@@ -1,0 +1,83 @@
+1. Навигация по файловой системе
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~/Desktop (main)
+$ mkdir LinuxLesson2
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~/Desktop (main)
+$ cd LinuxLesson2/
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~/Desktop/LinuxLesson2 (main)
+$ touch hm-2.txt
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~/Desktop/LinuxLesson2 (main)
+$ ls
+hm-2.txt
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~/Desktop/LinuxLesson2 (main)
+$ cd ../
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~/Desktop (main)
+$ cd /c/Users/Пользователь/Desktop/LinuxLesson2/
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~/Desktop/LinuxLesson2 (main)
+$ cd ~
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~ (hw1)
+$
+
+2. Управление файлами и каталогами и текстовые редакторы
+
+Вставил скриншоты работы в редакторах vim и nano
+
+Использованые команды по созданию, копированию, перемещению и удалению файлов: 
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~/Desktop/LinuxLesson2 (main)
+$ mkdir Test-dir
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~/Desktop/LinuxLesson2 (main)
+$ ls
+Test-dir/  hm-2-2/  hm-2.txt
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~/Desktop/LinuxLesson2 (main)
+$ touch test-1.md test-2.md
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~/Desktop/LinuxLesson2 (main)
+$ ls
+Test-dir/  hm-2-2/  hm-2.txt  test-1.md  test-2.md
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~/Desktop/LinuxLesson2 (main)
+$ echo 'Hi' > test-1.md
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~/Desktop/LinuxLesson2 (main)
+$ cat test-1.md
+Hi
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~/Desktop/LinuxLesson2 (main)
+$ cp test-1.md test-3.md
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~/Desktop/LinuxLesson2 (main)
+$ ls
+Test-dir/  hm-2-2/  hm-2.txt  test-1.md  test-2.md  test-3.md
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~/Desktop/LinuxLesson2 (main)
+$ cat test-3.md
+Hi
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~/Desktop/LinuxLesson2 (main)
+$ mv /c/Users/Пользователь/Desktop/Li
+mv: missing destination file operand after '/c/Users/Пользователь/Desktop/Li'
+Try 'mv --help' for more information.
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~/Desktop/LinuxLesson2 (main)
+$ mv /c/Users/Пользователь/Desktop/LinuxLesson2/test-3.md /c/Users/Пользователь/Desktop/LinuxLesson2//Test-dir/
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~/Desktop/LinuxLesson2 (main)
+$ rm -r Test-dir test-1.md test-2.md
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~/Desktop/LinuxLesson2 (main)
+$ ls
+hm-2-2/  hm-2.txt
+
+Пользователь@WIN-D898UBNGM2C MINGW64 ~/Desktop/LinuxLesson2 (main)
+$
+
